@@ -1,0 +1,111 @@
+;----------------------------------------------------------------------------
+; my .emacs file!! yaaaay
+;-----------------------------------------------------------------------------
+; remember - to reload, do M-x load-file <enter> <enter> (default name is
+; current file)
+;-----------------------------------------------------------------------------
+; Preferences
+;-----------------------------------------------------------------------------
+(toggle-scroll-bar -1)              ; turn off the scrollbar.
+(tool-bar-mode -1)                  ; turn off the tool bar.
+(fset 'yes-or-no-p 'y-or-n-p)       ; instead of yes-or-no do y-or-n
+(setq inhibit-startup-message t)    ; turn off splash screen
+(show-paren-mode t)                 ; show matching parenthesis
+(setq-default indent-tabs-mode nil) ; these four set tabs to 4 spaces
+(setq-default tab-width 4)
+(global-font-lock-mode t)        ; these three turn on syntax highlighting
+(load-library "font-lock")
+(setq font-lock-maximum-decoration t)
+; delete whitespace when exiting
+(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
+; fix comments
+(require 'newcomment)
+(setq comment-auto-fill-only-comments 1)
+(setq-default auto-fill-function 'do-auto-fill)
+
+;-----------------------------------------------------------------------------
+; load plugins.
+;-----------------------------------------------------------------------------
+(setq default-directory "~/.emacs.d")
+(normal-top-level-add-subdirs-to-load-path) ; load all subdirectories
+; of .emacs.d/
+(setq default-directory "~/") ; switch it back for better file finding
+
+;-----------------------------------------------------------------------------
+; Basic display options - line numbers, color
+;-----------------------------------------------------------------------------
+(require 'linum) ; line numbers
+(when (featurep 'linum) (global-linum-mode 1))
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-comidia)
+(set-face-background 'default "grey12")
+(set-face-foreground 'font-lock-comment-face "#ff7f24") ; back to orange.
+(copy-face 'italic 'font-lock-comment-face) ; italicize comments
+
+;-----------------------------------------------------------------------------
+; Basic editing - vim, line numbers, snippets
+;-----------------------------------------------------------------------------
+(require 'undo-tree) ; required by evil
+(setq evil-shift-width 4) ; fix behavior of > and < in normal state.
+(setq evil-repeat-move-cursor nil) ; on the . command do not move cursor
+(require 'evil)
+(evil-mode 1)
+(require 'surround) ; add surround.
+(global-surround-mode 1)
+; yasnippet, cuz snippets rock.
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/plugins/yasnippet-snippets/snippets") ; local snippets
+(setq yas/indent-line 'fixed)
+(require 'autopair)
+; (autopair-global-mode) ; enable autopair in all buffers
+
+;-----------------------------------------------------------------------------
+; LaTeX mode stuff
+;-----------------------------------------------------------------------------
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+
+;-----------------------------------------------------------------------------
+; org-mode stuff
+;-----------------------------------------------------------------------------
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+(setq org-log-done t) ; display timestamp when I complete something
+(setq org-agenda-files '("~/org/work.org" "/org/school.org" "/org/home.org"))
+
+;-----------------------------------------------------------------------------
+; Python stuff.
+;-----------------------------------------------------------------------------
+; fix sage
+(setq auto-mode-alist (append '(("/*.\.sage$" . python-mode))
+  auto-mode-alist))
+(autoload 'python-mode "python-mode.el" "Python mode... ENGAGED" t)
+(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
+(put 'downcase-region 'disabled nil)
+
+;-----------------------------------------------------------------------------
+; D stuff.
+;-----------------------------------------------------------------------------
+(autoload 'd-mode "d-mode" "Major mode for editing D code." t)
+(add-to-list 'auto-mode-alist '("\.d[i]?\'" . d-mode))
+(add-to-list 'auto-mode-alist '("/*.\.d$" . d-mode))
+
+;-----------------------------------------------------------------------------
+; Haskell stuff.
+;-----------------------------------------------------------------------------
+(setq auto-mode-alist (append '(("/*.\.hs$" . haskell-mode)) auto-mode-alist))
+(setq haskell-program-name "/usr/bin/ghci")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(require 'inf-haskell)
+
+; stuff for aquamacs. Ensure that this is the last line so that all
+; the variables are reset correctly.
+(if (boundp 'aquamacs-version)
+    (load "~/.aquamacs") nil)

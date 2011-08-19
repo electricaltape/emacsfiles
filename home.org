@@ -1,0 +1,34 @@
+* emacs ideas
+** TODO easy weather app
+   M-x weather <RET> should print something useful.
+** TODO fortran90 array printer app
+   take a set of data and format!
+
+
+* Schedule for this week
+  * some time
+    120 Student Services Building -- register for wireless access (???)
+    read over the handbook in the orange booklet
+    check access via hokie passport in to rooms
+    check mail box
+    plan of study form
+
+  * Monday
+    8:30 AM - noon -- 455 McB, meeting with math department (show up early)
+                      (bring documentation (SS card, passport, normal cards))
+    1:00 PM -- GTA workshop (show up early for check-in)
+
+  * Tuesday
+    1-?  PM -- 455 McB, Macintosh user orientation
+    3-5  PM -- Torg 1060, scholar training
+
+  * Wednesday
+    4:00 PM -- 455 McB, mandatory GTA meeting
+
+
+  * Thursday
+    4:30 PM -- GLC multipurpose, optional social event (food!)
+
+  * Friday
+    8:30 AM -- GLC multipurpose, optional orientation (food!)
+

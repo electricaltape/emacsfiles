@@ -1,0 +1,355 @@
+;; Object C/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "C/"
+  :tables (list 
+   (semanticdb-table "calc.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("stdio.h" include (:system-flag t) nil [386 404])
+            ("stdlib.h" include (:system-flag t) nil [405 424])
+            ("assert.h" include (:system-flag t) nil [425 444])
+            ("math.h" include (:system-flag t) nil [445 462])
+            ("setjmp.h" include (:system-flag t) nil [463 482])
+            ("VAR_NAME_SIZE" variable (:constant-flag t) nil [1184 1197])
+            ("MapEntry_t" type
+               (:typedef ("_MapEntry_t" type (:type "struct") nil nil)
+                :superclasses "_MapEntry_t"
+                :type "typedef")
+                nil [1201 1323])
+            ("_MapEntry_t" type
+               (:members 
+                  ( ("name" variable
+                       (:dereference 1
+                        :type "char")
+                        (reparse-symbol classsubparts) [1234 1261])
+                    ("value" variable (:type "double") (reparse-symbol classsubparts) [1266 1279])
+                    ("next" variable
+                       (:pointer 1
+                        :type ("_MapEntry_t" type
+                             (:prototype t
+                              :type "struct")
+                              nil nil))
+                        (reparse-symbol classsubparts) [1284 1309]))                  
+                :type "struct")
+                nil [1201 1323])
+            ("varmap" variable
+               (:pointer 1
+                :type ("MapEntry_t" type (:type "class") nil nil))
+                nil [1325 1344])
+            ("map_init" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [1361 1366]))                  
+                :type "void")
+                nil [1346 1386])
+            ("map_clear" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [1404 1409]))                  
+                :type "void")
+                nil [1388 1564])
+            ("map_find" function
+               (:pointer 1
+                :arguments 
+                  ( ("var" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [1588 1605]))                  
+                :type ("MapEntry_t" type (:type "class") nil nil))
+                nil [1566 1785])
+            ("map_add" function
+               (:arguments 
+                  ( ("var" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [1801 1817])
+                    ("value" variable (:type "double") (reparse-symbol arg-sub-list) [1818 1832]))                  
+                :type "void")
+                nil [1787 2143])
+            ("map_lookup" function
+               (:arguments 
+                  ( ("var" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [2161 2177])
+                    ("value" variable
+                       (:pointer 1
+                        :type "double")
+                        (reparse-symbol arg-sub-list) [2178 2193]))                  
+                :type "int")
+                nil [2145 2327])
+            ("TYPE_CHAR" variable (:constant-flag t) nil [2633 2642])
+            ("TYPE_FLOAT" variable (:constant-flag t) nil [2657 2667])
+            ("TYPE_EOF" variable (:constant-flag t) nil [2681 2689])
+            ("TYPE_ERROR" variable (:constant-flag t) nil [2705 2715])
+            ("TYPE_VARIABLE" variable (:constant-flag t) nil [2729 2742])
+            ("val_t" type
+               (:typedef ("_val_t" type (:type "struct") nil nil)
+                :superclasses "_val_t"
+                :type "typedef")
+                nil [2746 2881])
+            ("_val_t" type
+               (:members 
+                  ( ("type" variable (:type "int") (reparse-symbol classsubparts) [2774 2783])
+                    ("d" variable (:type ("" type
+                         (:members 
+                            ( ("fval" variable (:type "double") (reparse-symbol classsubparts) [2804 2816])
+                              ("cval" variable (:type "char") (reparse-symbol classsubparts) [2825 2835])
+                              ("variable" variable
+                                 (:dereference 1
+                                  :type "char")
+                                  (reparse-symbol classsubparts) [2844 2863]))                            
+                          :type "union")
+                          nil nil)) (reparse-symbol classsubparts) [2788 2872]))                  
+                :type "struct")
+                nil [2746 2881])
+            ("print_val" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3081 3093]))                  
+                :type "void")
+                nil [3065 3564])
+            ("argc" variable (:type "int") nil [3800 3809])
+            ("argv" variable
+               (:pointer 2
+                :type "char")
+                nil [3846 3858])
+            ("buffer" variable
+               (:dereference 1
+                :typemodifiers ("static")
+                :type "char")
+                nil [3939 3964])
+            ("next_val" variable (:type ("val_t" type (:type "class") nil nil)) nil [4026 4041])
+            ("arg" variable (:type "int") nil [4090 4102])
+            ("argp" variable (:type "int") nil [4166 4179])
+            ("bpos" variable (:type "int") nil [4243 4256])
+            ("have_next_val" variable
+               (:typemodifiers ("static")
+                :type "int")
+                nil [4258 4287])
+            ("env" variable (:type ("jmp_buf" type (:type "class") nil nil)) nil [4289 4301])
+            ("reset" function
+               (:arguments 
+                  ( ("pargc" variable (:type "int") (reparse-symbol arg-sub-list) [4314 4324])
+                    ("pargv" variable
+                       (:pointer 2
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [4325 4338]))                  
+                :type "void")
+                nil [4303 4461])
+            ("lex" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [4692 4703])
+                    ("next" variable (:type "int") (reparse-symbol arg-sub-list) [4704 4713]))                  
+                :type "void")
+                nil [4682 10210])
+            ("match_char" function
+               (:arguments 
+                  ( ("ch" variable (:type "char") (reparse-symbol arg-sub-list) [10495 10504]))                  
+                :type "int")
+                nil [10478 10660])
+            ("match_eof" function (:type "int") nil [10880 11006])
+            ("match_num" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [11296 11308]))                  
+                :type "int")
+                nil [11280 11431])
+            ("match_variable" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [11453 11465]))                  
+                :type "int")
+                nil [11433 11591])
+            ("resolve_variable" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [11616 11628]))                  
+                :type "void")
+                nil [11593 11967])
+            ("parse_term" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [11985 11996]))                  
+                :type "void")
+                nil [11969 11997])
+            ("parse_expr" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12014 12025]))                  
+                :type "void")
+                nil [11998 12026])
+            ("parse_factor" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12046 12058]))                  
+                :type "void")
+                nil [12027 12059])
+            ("parse_num_op" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12079 12091]))                  
+                :type "void")
+                nil [12060 12092])
+            ("parse_factor" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12112 12124]))                  
+                :type "void")
+                nil [12093 12125])
+            ("parse_rest_num_op" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12150 12162]))                  
+                :type "void")
+                nil [12126 12163])
+            ("parse_rest_var" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12185 12197]))                  
+                :type "void")
+                nil [12164 12198])
+            ("dprintf" variable (:constant-flag t) nil [12252 12259])
+            ("level" variable (:type "int") nil [12281 12295])
+            ("printtab" function (:type "void") nil [12296 12396])
+            ("parse_rest_term" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [12711 12723]))                  
+                :type "void")
+                nil [12689 13622])
+            ("parse_term" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [13830 13842]))                  
+                :type "void")
+                nil [13813 13987])
+            ("parse_rest_num_op" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14238 14250]))                  
+                :type "void")
+                nil [14214 14444])
+            ("parse_num_op" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [14690 14702]))                  
+                :type "void")
+                nil [14671 15349])
+            ("parse_factor" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [15574 15586]))                  
+                :type "void")
+                nil [15555 15825])
+            ("parse_rest_expr" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [16100 16112]))                  
+                :type "void")
+                nil [16078 16565])
+            ("parse_expr" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [16770 16781]))                  
+                :type "void")
+                nil [16754 17021])
+            ("parse_rest_var" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [17257 17269]))                  
+                :type "void")
+                nil [17236 17698])
+            ("parse" function
+               (:arguments 
+                  ( ("val" variable
+                       (:pointer 1
+                        :type ("val_t" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [17711 17723]))                  
+                :type "int")
+                nil [17700 17920])
+            ("usage" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [18122 18127]))                  
+                :type "void")
+                nil [18110 18200])
+            ("main" function
+               (:arguments 
+                  ( ("pargc" variable (:type "int") (reparse-symbol arg-sub-list) [18383 18393])
+                    ("pargv" variable
+                       (:pointer 1
+                        :dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [18394 18409]))                  
+                :type "int")
+                nil [18372 19929]))          
+    :file "calc.c"
+    :pointmax 19930
+    :fsize 19931
+    :lastmodtime '(19817 50383)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("TYPE_EOF" . ((number "2" 2695 . 2696)))
+          ("VAR_NAME_SIZE" . ((number "31" 1198 . 1200)))
+          ("TYPE_ERROR" . ((number "3" 2719 . 2720)))
+          ("TYPE_VARIABLE" . ((number "4" 2743 . 2744)))
+          ("dprintf" (spp-arg-list ("A") 12259 . 12262) . ((symbol "printf" 12263 . 12269) (semantic-list "(A)" 12269 . 12272)))
+          ("TYPE_FLOAT" . ((number "1" 2671 . 2672)))
+          ("TYPE_CHAR" . ((number "0" 2647 . 2648)))
+          )
+
+    )
+   )
+  :file "!home!dave!Documents!PersonalGrowth!Programming!C!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )
