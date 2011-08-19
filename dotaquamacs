@@ -1,0 +1,11 @@
+;; This is the Aquamacs Preferences file.
+;; Add Emacs-Lisp code here that should be executed whenever
+;; you start Aquamacs Emacs. If errors occur, Aquamacs will stop
+;; evaluating this file and print errors in the *Messags* buffer.
+;; Use this file in place of ~/.emacs (which is loaded as well.)
+
+(setq aquamacs-scratch-file nil
+      initial-major-mode 'lisp-interaction-mode)
+
+; haskell mode things
+(setq haskell-program-name "/sw/bin/ghci")

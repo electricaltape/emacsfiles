@@ -1,2 +1,4 @@
 a collection of files for emacs. The dotemacs file needs to be linked with
 ~/.emacs
+
+The dotaquamacs file needs to be linked with ~/.aquamacs
