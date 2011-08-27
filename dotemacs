@@ -22,14 +22,17 @@
 (require 'newcomment)
 (setq comment-auto-fill-only-comments 1)
 (setq-default auto-fill-function 'do-auto-fill)
+; make the font oh so slightly larger.
+(set-face-attribute 'default nil :height 125)
+; turn on automatic line wrapping at 79 - because it is 1980 and I am clearly
+; using a teletype.
+(setq fill-column 79)
 
 ;-----------------------------------------------------------------------------
 ; load plugins.
 ;-----------------------------------------------------------------------------
-(setq default-directory "~/.emacs.d")
-(normal-top-level-add-subdirs-to-load-path) ; load all subdirectories
-; of .emacs.d/
-(setq default-directory "~/") ; switch it back for better file finding
+(let ((default-directory "~/.emacs.d/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;-----------------------------------------------------------------------------
 ; Basic display options - line numbers, color
@@ -60,17 +63,26 @@
 ; yasnippet, cuz snippets rock.
 (require 'yasnippet)
 (yas/initialize)
-(yas/load-directory "~/.emacs.d/plugins/yasnippet-snippets/snippets") ; local snippets
+(yas/load-directory "~/.emacs.d/plugins/yasnippet-snippets/snippets") ; local
 (setq yas/indent-line 'fixed)
 (require 'autopair)
-; (autopair-global-mode) ; enable autopair in all buffers
+(add-hook 'haskell-mode-hook (lambda () (autopair-mode)))
+(add-hook 'python-mode-hook (lambda () (autopair-mode)))
+(add-hook 'c-mode-common-hook (lambda () (autopair-mode)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (autopair-mode)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (autopair-mode)))
 
 ;-----------------------------------------------------------------------------
 ; LaTeX mode stuff
 ;-----------------------------------------------------------------------------
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
 (setq-default TeX-master nil)
+(setq TeX-parse-self t)
+(setq TeX-auto-save t)
+; turn off the stupid resizing 'features'
+(add-hook 'LaTeX-mode-hook (setq font-latex-fontify-script nil))
+(add-hook 'LaTeX-mode-hook (setq font-latex-fontify-sectioning 'color))
+(add-hook 'LaTeX-mode-hook 'font-latex-update-sectioning-faces)
+(add-hook 'LaTeX-mode-hook 'font-lock-fontify-buffer)
 
 ;-----------------------------------------------------------------------------
 ; org-mode stuff
@@ -101,6 +113,11 @@
 (add-to-list 'auto-mode-alist '("/*.\.d$" . d-mode))
 
 ;-----------------------------------------------------------------------------
+; Scheme stuff.
+;-----------------------------------------------------------------------------
+(setq scheme-program-name "guile")
+
+;-----------------------------------------------------------------------------
 ; Haskell stuff.
 ;-----------------------------------------------------------------------------
 (setq auto-mode-alist (append '(("/*.\.hs$" . haskell-mode)) auto-mode-alist))
@@ -111,5 +128,4 @@
 
 ; stuff for aquamacs. Ensure that this is the last line so that all
 ; the variables are reset correctly.
-(if (boundp 'aquamacs-version)
-    (load "~/.aquamacs") nil)
+(if (boundp 'aquamacs-version) (load "~/.aquamacs") nil)
