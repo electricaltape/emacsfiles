@@ -39,9 +39,13 @@
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-comidia)
-(set-face-background 'default "grey12")
-(set-face-foreground 'font-lock-comment-face "#ff7f24") ; back to orange.
-(copy-face 'italic 'font-lock-comment-face) ; italicize comments
+; only modify the syntax highlighting if in gui mode
+(if window-system
+    (progn (set-face-background 'default "grey12")
+           ; back to orange.
+           (set-face-foreground 'font-lock-comment-face "#ff7f24")
+           ; italicize comments
+           (copy-face 'italic 'font-lock-comment-face)))
 
 ;-----------------------------------------------------------------------------
 ; Basic editing - vim, line numbers, snippets
