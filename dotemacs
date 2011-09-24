@@ -22,8 +22,6 @@
 (require 'newcomment)
 (setq comment-auto-fill-only-comments 1)
 (setq-default auto-fill-function 'do-auto-fill)
-; make the font oh so slightly larger.
-(set-face-attribute 'default nil :height 125)
 ; turn on automatic line wrapping at 79 - because it is 1980 and I am clearly
 ; using a teletype.
 (setq fill-column 79)
@@ -42,19 +40,17 @@
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-comidia)
+(set-face-attribute 'default nil
+                    :family "Bitstream Vera Sans Mono" :height 110)
 ; only modify the syntax highlighting if in gui mode
 (if window-system
     (progn (set-face-background 'default "grey12")
+           ; italicize comments
+           (copy-face 'italic 'font-lock-comment-face)
            ; back to orange.
            (set-face-foreground 'font-lock-comment-face "#ff7f24")
-           ; italicize comments
-           (copy-face 'italic 'font-lock-comment-face)))
+           nil))
 
-;-----------------------------------------------------------------------------
-; Basic editing - vim, line numbers, snippets
-;-----------------------------------------------------------------------------
-(require 'undo-tree) ; required by evil
-(setq evil-shift-width 4) ; fix behavior of > and < in normal state.
 (setq evil-repeat-move-cursor nil) ; on the . command do not move cursor
 (require 'evil)
 (evil-mode 1)
