@@ -1,11 +1,11 @@
-;----------------------------------------------------------------------------
+;------------------------------------------------------------------------------
 ; my .emacs file!! yaaaay
-;-----------------------------------------------------------------------------
+;------------------------------------------------------------------------------
 ; remember - to reload, do M-x load-file <enter> <enter> (default name is
 ; current file)
-;-----------------------------------------------------------------------------
+;------------------------------------------------------------------------------
 ; Preferences
-;-----------------------------------------------------------------------------
+;------------------------------------------------------------------------------
 (toggle-scroll-bar -1)              ; turn off the scrollbar.
 (tool-bar-mode -1)                  ; turn off the tool bar.
 (fset 'yes-or-no-p 'y-or-n-p)       ; instead of yes-or-no do y-or-n
@@ -24,24 +24,27 @@
 (setq-default auto-fill-function 'do-auto-fill)
 ; turn on automatic line wrapping at 79 - because it is 1980 and I am clearly
 ; using a teletype.
-(setq fill-column 79)
+(setq-default fill-column 79)
 
 ;-----------------------------------------------------------------------------
 ; load plugins.
 ;-----------------------------------------------------------------------------
 (let ((default-directory "~/.emacs.d/"))
   (normal-top-level-add-subdirs-to-load-path))
+(let ((default-directory "~/.emacs.d/plugins/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;-----------------------------------------------------------------------------
 ; Basic display options - line numbers, color
 ;-----------------------------------------------------------------------------
+(setq inhibit-x-resources t)
 (require 'linum) ; line numbers
 (when (featurep 'linum) (global-linum-mode 1))
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-comidia)
 (set-face-attribute 'default nil
-                    :family "Bitstream Vera Sans Mono" :height 110)
+                    :family "Monospace" :height 110)
 ; only modify the syntax highlighting if in gui mode
 (if window-system
     (progn (set-face-background 'default "grey12")
@@ -71,6 +74,9 @@
 ;-----------------------------------------------------------------------------
 ; LaTeX mode stuff
 ;-----------------------------------------------------------------------------
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+(add-to-list 'auto-mode-alist '("/*.\.tex$" . LaTeX-mode))
 (setq-default TeX-master nil)
 (setq TeX-parse-self t)
 (setq TeX-auto-save t)
@@ -79,6 +85,8 @@
 (add-hook 'LaTeX-mode-hook (setq font-latex-fontify-sectioning 'color))
 (add-hook 'LaTeX-mode-hook 'font-latex-update-sectioning-faces)
 (add-hook 'LaTeX-mode-hook 'font-lock-fontify-buffer)
+; try to get auto fill mode to work right.
+(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
 
 ;-----------------------------------------------------------------------------
 ; org-mode stuff
@@ -100,6 +108,11 @@
 (autoload 'python-mode "python-mode.el" "Python mode... ENGAGED" t)
 (setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
 (put 'downcase-region 'disabled nil)
+
+;-----------------------------------------------------------------------------
+; GNU/Octave and MATLAB Stuffs.
+;-----------------------------------------------------------------------------
+(add-to-list 'auto-mode-alist '("/*.\.m$" . octave-mode))
 
 ;-----------------------------------------------------------------------------
 ; D stuff.
