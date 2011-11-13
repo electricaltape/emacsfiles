@@ -1,0 +1,3 @@
+\newcommand{\suchthat}{\ensuremath{\, \mathrm{s.t.} \,}}
+\newcommand{\abs}[1]{\ensuremath{\left| #1 \right|}}
+\renewcommand{\labelenumi}{\alph{enumi}}

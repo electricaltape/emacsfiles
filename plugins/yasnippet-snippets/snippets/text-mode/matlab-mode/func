@@ -1,0 +1,16 @@
+#name : function documentation
+# --
+function [${1:output}] = ${2:`(car (last (split-string (file-name-sans-extension (buffer-file-name)) "/")))`}(${3:input})
+% -----------------------------------------------------------------------------
+% function
+%
+% input  : $3
+%
+% output : $1
+%
+% goal   :
+% -----------------------------------------------------------------------------
+    $0
+end
+
+

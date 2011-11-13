@@ -1,0 +1,7 @@
+#name : document string
+# --
+% ==============================================================================
+% File    : `(car (last (split-string (buffer-file-name) "/")))`
+% Author  : David Wells < drwells at default Virginia Tech email >
+% Purpose : $1
+% ==============================================================================

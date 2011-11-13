@@ -1,0 +1,4 @@
+#contributor : dave
+#name : real numbers, blackboard bold.
+# --
+\mathbb{Z}$0`(let ((beg (point))) (forward-line 1) (delete-region beg (point))) ; kill next line`
