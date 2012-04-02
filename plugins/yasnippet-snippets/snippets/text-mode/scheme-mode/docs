@@ -1,0 +1,7 @@
+# --
+; ==============================================================================
+; File: `(car (last (split-string (buffer-file-name) "/"))) ; finds last entry
+   (filename) in the full path of the file`
+; Author: David Wells
+; Description: ${1}
+; ==============================================================================
