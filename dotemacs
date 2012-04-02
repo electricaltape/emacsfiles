@@ -8,6 +8,7 @@
 ;------------------------------------------------------------------------------
 (toggle-scroll-bar -1)              ; turn off the scrollbar.
 (tool-bar-mode -1)                  ; turn off the tool bar.
+(menu-bar-mode -1)                  ; turn off the menu bar.
 (fset 'yes-or-no-p 'y-or-n-p)       ; instead of yes-or-no do y-or-n
 (setq inhibit-startup-message t)    ; turn off splash screen
 (show-paren-mode t)                 ; show matching parenthesis
