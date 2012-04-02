@@ -1,0 +1,56 @@
+# -*- mode: latex -*-
+# name: template
+# key: template
+# binding: "keybinding"
+# expand-env: ((some-var some-value))
+# --
+\documentclass[letterpaper,10pt]{article}
+\usepackage[top=1in,right=1in,left=1in,bottom=1in]{geometry}
+% math stuff
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{sagetex}
+% picture stuff
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.pdf}
+% code stuff. Get a nice font for code.
+\usepackage{listings}
+\usepackage{beramono}
+% font stuff
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}
+\linespread{1.05} % Palatino needs more leading (space between lines)
+% turn off all of the numbers? Uncomment the next line!
+\setcounter{secnumdepth}{-1}
+% title stuff
+\title{Integrating Basis Functions on Embedded Domains}
+\author{Dave Wells}
+\begin{document}
+\lstset{basicstyle=\footnotesize\ttfamily,
+        showstringspaces=false,
+        postbreak=\space,
+        breakindent=5pt,
+        breaklines}
+\maketitle
+\newcommand{\Norm}[1]{\ensuremath{\left|\left| #1 \right|\right|}}
+\newcommand{\abs}[1]{\ensuremath{\left| #1 \right|}}
+\newcommand{\ToZero}[1]{\cancel{#1}}
+
+\newcommand{\ThreeMatrix}[9]{\ensuremath{\begin{pmatrix} #1 & #2 & #3 \\
+                                                         #4 & #5 & #6 \\
+                                                         #7 & #8 & #9
+                                                         \end{pmatrix}}}
+\newcommand{\TwoVectorRow}[2]{\ensuremath{\begin{pmatrix} #1 & #2
+                                          \end{pmatrix}}}
+\newcommand{\TwoVectorColumn}[2]{\ensuremath{\begin{pmatrix} #1 \\
+                                                             #2 \end{pmatrix}}}
+\newcommand{\TwoMatrix}[4]{\ensuremath{\begin{pmatrix} #1 & #2 \\
+                                                       #3 & #4 \end{pmatrix}}}
+\newcommand{\Limit}[3]{\ensuremath{\underset{#1 \to #2}{\lim} #3}}
+\newcommand{\Integral}[2]{\ensuremath{\int^{#2}_{#1}}}
+\newcommand{\Brackets}[1]{\ensuremath{\left\{#1\right\}}}
+\end{document}
