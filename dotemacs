@@ -19,7 +19,7 @@
 (setq font-lock-maximum-decoration t)
 ; fix comments
 (require 'newcomment)
-; make the font oh so slightly larger.
+; make the font size right.
 (set-face-attribute 'default nil :height 115)
 ; ido mode
 (ido-mode 1)
@@ -142,4 +142,3 @@
 ; stuff for aquamacs. Ensure that this is the last line so that all
 ; the variables are reset correctly.
 (if (boundp 'aquamacs-version) (load "~/.aquamacs") nil)
-(setq-default inferior-lisp-program "/sw/bin/sbcl")
