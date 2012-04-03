@@ -16,6 +16,11 @@
 (custom-set-faces
  '(font-latex-slide-title-face ((t (:inherit font-lock-type-face)))))
 
+; fix indentation.
+(setq LaTeX-indent-level 4)
+(setq TeX-newline-function 'newline-and-indent)
+; add nice formatting
+(add-hook 'LaTeX-mode-hook '(auto-fill-mode 1))
 ; -------------------------------------------------------------------------------
 ; Custom elisp
 ; -------------------------------------------------------------------------------

@@ -1,7 +1,8 @@
-; set up evil
-(setq evil-repeat-move-cursor nil) ; on the . command do not move cursor
+(require 'undo-tree) ; required by evil
 (require 'evil)
 (evil-mode 1)
+(setq evil-shift-width 4) ; fix behavior of > and < in normal state.
+(setq evil-repeat-move-cursor nil) ; on the . command do not move cursor
 ; bind window switching to something that will not give me carpal tunnel.
 
 (defun cycle-selected-buffer () 'cycle-selected-buffer)
@@ -16,5 +17,4 @@
 (yas/load-directory "~/.emacs.d/plugins/yasnippet-snippets/snippets") ; local
 (setq yas/indent-line 'fixed)
 (require 'autopair)
-
-(add-hook 'text-mode-hook (lambda () (autopair-mode)))
+(autopair-global-mode 1)
