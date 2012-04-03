@@ -6,7 +6,9 @@
 ;-----------------------------------------------------------------------------
 ; Preferences
 ;-----------------------------------------------------------------------------
-(tool-bar-mode -1)                  ; turn off the tool bar.
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)       ; instead of yes-or-no do y-or-n
 (setq inhibit-startup-message t)    ; turn off splash screen
 (show-paren-mode t)                 ; show matching parenthesis
@@ -17,8 +19,8 @@
 (setq font-lock-maximum-decoration t)
 ; fix comments
 (require 'newcomment)
-; make the font oh so slightly larger.
-(set-face-attribute 'default nil :height 125)
+; make the font size right.
+(set-face-attribute 'default nil :height 115)
 ; ido mode
 (ido-mode 1)
 (setq ido-enable-flex-matching t)
@@ -140,4 +142,3 @@
 ; stuff for aquamacs. Ensure that this is the last line so that all
 ; the variables are reset correctly.
 (if (boundp 'aquamacs-version) (load "~/.aquamacs") nil)
-(setq-default inferior-lisp-program "/sw/bin/sbcl")
