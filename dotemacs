@@ -1,62 +1,63 @@
-;------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
 ; my .emacs file!! yaaaay
-;------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
 ; remember - to reload, do M-x load-file <enter> <enter> (default name is
 ; current file)
-;------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
 ; Preferences
-;------------------------------------------------------------------------------
-(toggle-scroll-bar -1)              ; turn off the scrollbar.
+;-----------------------------------------------------------------------------
 (tool-bar-mode -1)                  ; turn off the tool bar.
-(menu-bar-mode -1)                  ; turn off the menu bar.
 (fset 'yes-or-no-p 'y-or-n-p)       ; instead of yes-or-no do y-or-n
 (setq inhibit-startup-message t)    ; turn off splash screen
 (show-paren-mode t)                 ; show matching parenthesis
 (setq-default indent-tabs-mode nil) ; these four set tabs to 4 spaces
 (setq-default tab-width 4)
-(global-font-lock-mode t)        ; these three turn on syntax highlighting
+(global-font-lock-mode t)           ; these three turn on syntax highlighting
 (load-library "font-lock")
 (setq font-lock-maximum-decoration t)
-; delete whitespace when exiting
-(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
 ; fix comments
 (require 'newcomment)
-(setq comment-auto-fill-only-comments 1)
-(setq-default auto-fill-function 'do-auto-fill)
+; make the font oh so slightly larger.
+(set-face-attribute 'default nil :height 125)
+; ido mode
+(ido-mode 1)
+(setq ido-enable-flex-matching t)
+
+;-----------------------------------------------------------------------------
+; Pagewise formatting
+;-----------------------------------------------------------------------------
+; wrap long lines.
+(add-hook 'text-mode-hook 'auto-fill-mode)
 ; turn on automatic line wrapping at 79 - because it is 1980 and I am clearly
 ; using a teletype.
 (setq-default fill-column 79)
-; show column position.
-(column-number-mode)
+(setq fill-column 79)
+; delete whitespace when exiting
+(add-hook 'before-save-hook (lambda () (delete-trailing-whitespace)))
 
 ;-----------------------------------------------------------------------------
 ; load plugins.
 ;-----------------------------------------------------------------------------
 (let ((default-directory "~/.emacs.d/"))
   (normal-top-level-add-subdirs-to-load-path))
-(let ((default-directory "~/.emacs.d/plugins/"))
-  (normal-top-level-add-subdirs-to-load-path))
 
 ;-----------------------------------------------------------------------------
 ; Basic display options - line numbers, color
 ;-----------------------------------------------------------------------------
-(setq inhibit-x-resources t)
 (require 'linum) ; line numbers
 (when (featurep 'linum) (global-linum-mode 1))
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-comidia)
-(set-face-attribute 'default nil
-                    :family "Monospace" :height 110)
-; only modify the syntax highlighting if in gui mode
-(if window-system
-    (progn (set-face-background 'default "grey12")
-           ; italicize comments
-           (copy-face 'italic 'font-lock-comment-face)
-           ; back to orange.
-           (set-face-foreground 'font-lock-comment-face "#ff7f24")
-           nil))
+(set-face-background 'default "grey12")
+(copy-face 'italic 'font-lock-comment-face) ; italicize comments
+(set-face-foreground 'font-lock-comment-face "#ff7f24") ; back to orange.
 
+;-----------------------------------------------------------------------------
+; Basic editing - vim, line numbers, snippets
+;-----------------------------------------------------------------------------
+(require 'undo-tree) ; required by evil
+(setq evil-shift-width 4) ; fix behavior of > and < in normal state.
 (setq evil-repeat-move-cursor nil) ; on the . command do not move cursor
 (require 'evil)
 (evil-mode 1)
@@ -68,18 +69,12 @@
 (yas/load-directory "~/.emacs.d/plugins/yasnippet-snippets/snippets") ; local
 (setq yas/indent-line 'fixed)
 (require 'autopair)
-(add-hook 'haskell-mode-hook (lambda () (autopair-mode)))
-(add-hook 'python-mode-hook (lambda () (autopair-mode)))
-(add-hook 'c-mode-common-hook (lambda () (autopair-mode)))
-(add-hook 'emacs-lisp-mode-hook (lambda () (autopair-mode)))
-(add-hook 'lisp-interaction-mode-hook (lambda () (autopair-mode)))
+; experiment - add to text mode.
+(autopair-global-mode 1)
 
 ;-----------------------------------------------------------------------------
 ; LaTeX mode stuff
 ;-----------------------------------------------------------------------------
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
-(add-to-list 'auto-mode-alist '("/*.\.tex$" . LaTeX-mode))
 (setq-default TeX-master nil)
 (setq TeX-parse-self t)
 (setq TeX-auto-save t)
@@ -88,8 +83,11 @@
 (add-hook 'LaTeX-mode-hook (setq font-latex-fontify-sectioning 'color))
 (add-hook 'LaTeX-mode-hook 'font-latex-update-sectioning-faces)
 (add-hook 'LaTeX-mode-hook 'font-lock-fontify-buffer)
-; try to get auto fill mode to work right.
-(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+; fix indentation.
+(setq LaTeX-indent-level 4)
+(setq TeX-newline-function 'newline-and-indent)
+; add nice formatting
+(add-hook 'LaTeX-mode-hook '(auto-fill-mode 1))
 
 ;-----------------------------------------------------------------------------
 ; org-mode stuff
@@ -113,11 +111,6 @@
 (put 'downcase-region 'disabled nil)
 
 ;-----------------------------------------------------------------------------
-; GNU/Octave and MATLAB Stuffs.
-;-----------------------------------------------------------------------------
-(add-to-list 'auto-mode-alist '("/*.\.m$" . octave-mode))
-
-;-----------------------------------------------------------------------------
 ; D stuff.
 ;-----------------------------------------------------------------------------
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
@@ -128,6 +121,12 @@
 ; Scheme stuff.
 ;-----------------------------------------------------------------------------
 (setq scheme-program-name "guile")
+
+;-----------------------------------------------------------------------------
+; C stuff.
+;-----------------------------------------------------------------------------
+(setq c-default-style "linux"
+      c-basic-offset 4)
 
 ;-----------------------------------------------------------------------------
 ; Haskell stuff.
@@ -141,3 +140,4 @@
 ; stuff for aquamacs. Ensure that this is the last line so that all
 ; the variables are reset correctly.
 (if (boundp 'aquamacs-version) (load "~/.aquamacs") nil)
+(setq-default inferior-lisp-program "/sw/bin/sbcl")
