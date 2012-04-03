@@ -6,7 +6,9 @@
 ;-----------------------------------------------------------------------------
 ; Preferences
 ;-----------------------------------------------------------------------------
-(tool-bar-mode -1)                  ; turn off the tool bar.
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)       ; instead of yes-or-no do y-or-n
 (setq inhibit-startup-message t)    ; turn off splash screen
 (show-paren-mode t)                 ; show matching parenthesis
@@ -18,7 +20,7 @@
 ; fix comments
 (require 'newcomment)
 ; make the font oh so slightly larger.
-(set-face-attribute 'default nil :height 125)
+(set-face-attribute 'default nil :height 115)
 ; ido mode
 (ido-mode 1)
 (setq ido-enable-flex-matching t)
