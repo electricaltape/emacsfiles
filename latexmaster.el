@@ -7,10 +7,10 @@
 (setq TeX-auto-save t)
 
 ;; turn off the stupid resizing 'features'
-(add-hook 'LaTeX-mode-hook (setq font-latex-fontify-script nil))
-(add-hook 'LaTeX-mode-hook (setq font-latex-fontify-sectioning 'color))
-(add-hook 'LaTeX-mode-hook 'font-latex-update-sectioning-faces)
-(add-hook 'LaTeX-mode-hook 'font-lock-fontify-buffer)
+(setq font-latex-fontify-script nil)
+(setq font-latex-fontify-sectioning 'color)
+(font-latex-update-sectioning-faces)
+(font-lock-fontify-buffer)
 
 ;; turn off the very stupid resizing for beamer.
 (custom-set-faces
@@ -19,8 +19,9 @@
 ; fix indentation.
 (setq LaTeX-indent-level 4)
 (setq TeX-newline-function 'newline-and-indent)
-; add nice formatting
-(add-hook 'LaTeX-mode-hook '(auto-fill-mode 1))
+; add nice formatting and outline mode
+(auto-fill-mode 1)
+(outline-minor-mode)
 ; -------------------------------------------------------------------------------
 ; Custom elisp
 ; -------------------------------------------------------------------------------
