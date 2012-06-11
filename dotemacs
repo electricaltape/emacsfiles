@@ -75,6 +75,15 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (require 'inf-haskell)
 
+; LaTeX stuff
+(setq auto-mode-alist (append '(("/*.\.tex$" . LaTeX-mode)) auto-mode-alist))
+(add-hook 'LaTeX-mode-hook (lambda () (load "~/.emacs.d/latexmaster.el")))
+
+; outline mode stuff
+(add-hook 'outline-minor-mode-hook
+          (lambda ()
+            (define-key outline-minor-mode-map [(shift tab)] 'org-cycle)))
+
 ; stuff for aquamacs. Ensure that this is the last line so that all
 ; the variables are reset correctly.
 (if (boundp 'aquamacs-version) (load "~/.aquamacs") nil)
