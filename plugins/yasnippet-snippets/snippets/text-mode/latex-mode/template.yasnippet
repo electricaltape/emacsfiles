@@ -29,13 +29,11 @@
 % title stuff
 \title{Integrating Basis Functions on Embedded Domains}
 \author{Dave Wells}
-\begin{document}
 \lstset{basicstyle=\footnotesize\ttfamily,
         showstringspaces=false,
         postbreak=\space,
         breakindent=5pt,
         breaklines}
-\maketitle
 \newcommand{\Norm}[1]{\ensuremath{\left|\left| #1 \right|\right|}}
 \newcommand{\abs}[1]{\ensuremath{\left| #1 \right|}}
 \newcommand{\ToZero}[1]{\cancel{#1}}
@@ -50,7 +48,9 @@
                                                              #2 \end{pmatrix}}}
 \newcommand{\TwoMatrix}[4]{\ensuremath{\begin{pmatrix} #1 & #2 \\
                                                        #3 & #4 \end{pmatrix}}}
-\newcommand{\Limit}[3]{\ensuremath{\underset{#1 \to #2}{\lim} #3}}
+\newcommand{\Limit}[3]{\ensuremath{\underset{#1 \to #2}{\lim}\, #3}}
 \newcommand{\Integral}[2]{\ensuremath{\int^{#2}_{#1}}}
 \newcommand{\Brackets}[1]{\ensuremath{\left\{#1\right\}}}
+\begin{document}
+\maketitle
 \end{document}
