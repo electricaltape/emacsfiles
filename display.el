@@ -8,14 +8,16 @@
 (color-theme-comidia)
 (set-face-attribute 'default nil
                     :family "Monospace" :height 110)
+(setq font-lock)
+(set-face-foreground 'font-lock-negation-char-face "red")
 ; modify the syntax highlighting if in gui mode
 (if window-system
     (progn (set-face-background 'default "grey12")
            ; italicize comments
            (copy-face 'italic 'font-lock-comment-face)
-           ; back to orange.
-           (set-face-foreground 'font-lock-comment-face "#ff7f24")
+           ; back to grey.
+           (set-face-foreground 'font-lock-comment-face "orange")
            nil))
 
 ; show column number.
-(column-number-mode)
+(column-number-mode t)

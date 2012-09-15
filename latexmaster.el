@@ -1,26 +1,28 @@
 ;; AucTeX initialization settings
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
-(add-to-list 'auto-mode-alist '("/*.\.tex$" . LaTeX-mode))
 (setq-default TeX-master nil)
 (setq TeX-parse-self t)
 (setq TeX-auto-save t)
 
 ;; turn off the stupid resizing 'features'
-(add-hook 'LaTeX-mode-hook (setq font-latex-fontify-script nil))
-(add-hook 'LaTeX-mode-hook (setq font-latex-fontify-sectioning 'color))
-(add-hook 'LaTeX-mode-hook 'font-latex-update-sectioning-faces)
-(add-hook 'LaTeX-mode-hook 'font-lock-fontify-buffer)
+(setq font-latex-fontify-script nil)
+(setq font-latex-fontify-sectioning 'color)
+(font-latex-update-sectioning-faces)
+;; (font-lock-fontify-buffer)
 
 ;; turn off the very stupid resizing for beamer.
 (custom-set-faces
  '(font-latex-slide-title-face ((t (:inherit font-lock-type-face)))))
 
+; turn on outline mode for nice section folding.
 ; fix indentation.
 (setq LaTeX-indent-level 4)
+(setq LaTeX-item-indent -2)
 (setq TeX-newline-function 'newline-and-indent)
 ; add nice formatting
-(add-hook 'LaTeX-mode-hook '(auto-fill-mode 1))
+(auto-fill-mode 1)
+
 ; -------------------------------------------------------------------------------
 ; Custom elisp
 ; -------------------------------------------------------------------------------
@@ -30,7 +32,7 @@
         '(("\\{" . "\\left\\{") . ("\\}" . "\\right\\}"))))
 
 (defun toggle-left-right-ify-region (start end)
-  "Toggle all the '\\left('s to '('s, or ')'s to '\\left)'s."
+  "Toggle all the '\\left('s to '('s, or ')'s to '\\right)'s."
   ; see if we can find a \\left in the region.
   (interactive "r")
   (save-restriction
