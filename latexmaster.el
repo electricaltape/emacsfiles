@@ -9,7 +9,7 @@
 (setq font-latex-fontify-script nil)
 (setq font-latex-fontify-sectioning 'color)
 (font-latex-update-sectioning-faces)
-;; (font-lock-fontify-buffer)
+(font-lock-fontify-buffer)
 
 ;; turn off the very stupid resizing for beamer.
 (custom-set-faces
@@ -20,9 +20,10 @@
 (setq LaTeX-indent-level 4)
 (setq LaTeX-item-indent -2)
 (setq TeX-newline-function 'newline-and-indent)
-; add nice formatting
+; add nice formatting and outline mode
 (auto-fill-mode 1)
-
+(outline-minor-mode)
+;
 ; -------------------------------------------------------------------------------
 ; Custom elisp
 ; -------------------------------------------------------------------------------

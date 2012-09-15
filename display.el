@@ -1,4 +1,4 @@
-;; display initialization setitings
+;; display initialization settings
 
 (setq inhibit-x-resources t)
 (require 'linum) ; line numbers
