@@ -2,8 +2,6 @@
 (regexp-opt '("\\section" "\\subsection" "\\subsubsection"))
 "\\(?:\\\\s\\(?:\\(?:ubs\\(?:ubs\\)?\\)?ection\\)\\)"
 
-(append '(1 2 3) '(4 5 6) '(7 8 9))
-
 (defun fix-ORDER-macro (start end)
   "Fix the order macro for any rectangular matrix."
   (interactive "r")
@@ -22,8 +20,6 @@
                                ", "
                                (match-string 3)
                                ")"))))))
-
-ORDER(0,1, 2)
 
 figuring out DGEMM_WRAPPER
 
@@ -73,3 +69,12 @@ int main(int argc, char *argv[])
         print_matrix(ref_dx, 21, 3);
         return 0;
 }
+
+javascript:var x=document.getElementsByTagName("input");
+for(var i=0;
+        i<x.length;
+        i++)
+{if (x[i].type == 'checkbox')
+{x[i].click();
+}};
+        alert('Done, all your friends have been selected');
