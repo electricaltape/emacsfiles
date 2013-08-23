@@ -42,6 +42,16 @@
 (load "~/.emacs.d/display.el")
 (load "~/.emacs.d/editing.el")
 
+;; package management stuff
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
+;;
+;; Language stuff
+;;
+
 ;; C stuff
 (add-hook 'c-mode-common-hook (lambda () (load "~/.emacs.d/cmaster.el")))
 
@@ -69,13 +79,18 @@
 (setq auto-mode-alist (append '(("/*.\.jl$" . julia-mode)) auto-mode-alist))
 
 ;; LaTeX stuff
-(load "~/.emacs.d/vtex.el")
+;; (load "~/.emacs.d/vtex.el")
+(load "auctex.el" nil t t)
 (add-to-list 'auto-mode-alist '("/*.\.tex$" . LaTeX-mode))
 (add-hook 'LaTeX-mode-hook
           (lambda ()
             (progn
               (load-file "~/.emacs.d/latexmaster.el")
               (outline-minor-mode))))
+
+;; markdown stuff
+(add-to-list 'auto-mode-alist '("/*.\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("/*.\.markdown$" . markdown-mode))
 
 ;; org-mode stuff
 (add-hook 'org-mode-hook
@@ -86,15 +101,17 @@
             (define-key outline-minor-mode-map [(shift tab)] 'org-cycle)))
 
 ;; Python stuff
+(require 'python-mode)
+;(require 'flymake-python-pyflakes)
+(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 (setq auto-mode-alist (append '(("/*.\.sage$" . python-mode))
                               auto-mode-alist))
-(autoload 'python-mode "python-mode.el" "Python mode... ENGAGED" t)
-(setq auto-mode-alist (append '(("/*.\.py$" . python-mode)) auto-mode-alist))
-(put 'downcase-region 'disabled nil)
+(add-to-list 'auto-mode-alist '("\\.py" . python-mode))
 
 ;; Scheme stuff
 (setq scheme-program-name "guile")
 
 ;; stuff for aquamacs. Ensure that this is the last line so that all
-;; the variables are reset correctly.
-(if (boundp 'aquamacs-version) (load "~/.aquamacs") nil)
+;; the variables are reset correctly. Otherwise do stuff for GNU/Linux.
+(if (boundp 'aquamacs-version) (load "~/.aquamacs")
+  (setq-default ispell-program-name "aspell"))
