@@ -13,8 +13,8 @@
 (global-surround-mode 1)
 ; yasnippet, cuz snippets rock.
 (require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/plugins/yasnippet-snippets/snippets") ; local
-(setq yas/indent-line 'fixed)
+(yas-global-mode 1)
+(yas-load-directory "~/.emacs.d/plugins/yasnippet-snippets/snippets/text-mode")
+(setq yas-indent-line 'auto)
 (require 'autopair)
 (autopair-global-mode 1)
