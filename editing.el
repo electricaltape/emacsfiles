@@ -8,10 +8,6 @@
 (defun cycle-selected-buffer () 'cycle-selected-buffer)
 (define-key evil-normal-state-map "tn" 'other-window)
 
-(load-file "~/.emacs.d/plugins/surround.el")
-(require 'surround) ; add surround.
-(global-surround-mode 1)
-
 ;; yasnippet currently having trouble on the beta copy of aquamacs24
 (if (boundp 'aquamacs-version)
     (progn
