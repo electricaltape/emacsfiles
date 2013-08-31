@@ -54,7 +54,9 @@
 ;;
 ; language independent (as of emacs 24)
 (add-hook 'prog-mode-hook
-          (lambda () (local-set-key (kbd "RET") 'newline-and-indent)))
+          (lambda () (if boundp 'evil-version)
+            (define-key evil-insert-state-map (kbd "RET") 'evil-ret-and-indent)
+            (local-set-key (kbd "RET") 'newline-and-indent)))
 
 ;; C stuff
 (add-hook 'c-mode-common-hook (lambda () (load "~/.emacs.d/cmaster.el")))
