@@ -10,6 +10,13 @@
 ; extra cl stuff for aquamacs. Necessary due to bugs in aquamacs.
 (if (boundp 'aquamacs-version) (load-file "~/.emacs.d/extra-cl.el"))
 
+;; package management stuff. Must be before editing/display files.
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
+
 (setq default-directory "~/")
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -43,20 +50,14 @@
 (load "~/.emacs.d/display.el")
 (load "~/.emacs.d/editing.el")
 
-;; package management stuff
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
-
 ;;
 ;; Language stuff
 ;;
 ; language independent (as of emacs 24)
 (add-hook 'prog-mode-hook
-          (lambda () (if boundp 'evil-version)
+          (lambda () (if (boundp 'evil-version)
             (define-key evil-insert-state-map (kbd "RET") 'evil-ret-and-indent)
-            (local-set-key (kbd "RET") 'newline-and-indent)))
+            (local-set-key (kbd "RET") 'newline-and-indent))))
 
 ;; C stuff
 (add-hook 'c-mode-common-hook (lambda () (load "~/.emacs.d/cmaster.el")))
