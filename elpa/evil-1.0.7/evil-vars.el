@@ -3,7 +3,7 @@
 ;; Author: Vegard Øye <vegard_oye at hotmail.com>
 ;; Maintainer: Vegard Øye <vegard_oye at hotmail.com>
 
-;; Version: 1.0-dev
+;; Version: 1.0.7
 
 ;;
 ;; This file is NOT part of GNU Emacs.
@@ -186,18 +186,8 @@ moves the cursor."
   :type 'boolean
   :group 'evil)
 
-(defcustom evil-backspace-join-lines t
-  "Whether backward delete in insert state may join lines."
-  :type 'boolean
-  :group 'evil)
-
 (defcustom evil-move-cursor-back t
   "Whether the cursor is moved backwards when exiting Insert state."
-  :type 'boolean
-  :group 'evil)
-
-(defcustom evil-repeat-find-to-skip-next t
-  "Whether a repeat of t or T should skip an adjacent character."
   :type 'boolean
   :group 'evil)
 
@@ -286,30 +276,6 @@ This should be a regexp set without the enclosing []."
 (defcustom evil-esc-delay 0.01
   "Time in seconds to wait for another key after ESC."
   :type 'number
-  :group 'evil)
-
-(defvar evil-esc-mode nil
-  "Non-nil if `evil-esc-mode' is enabled.")
-
-(defvar evil-esc-map nil
-  "Original ESC prefix map in `input-decode-map'.
-Used by `evil-esc-mode'.")
-
-(defvar evil-inhibit-esc nil
-  "If non-nil, the \\e event will never be translated to 'escape.")
-
-(defcustom evil-intercept-esc 'always
-  "Whether evil should intercept the ESC key.
-In terminal, a plain ESC key and a meta-key-sequence both
-generate the same event. In order to distinguish both evil
-modifies `input-decode-map'. This is necessary in terminal but
-not in X mode. However, the terminal ESC is equivalent to C-[, so
-if you want to use C-[ instead of ESC in X, then Evil must
-intercept the ESC event in X, too. This variable determines when
-Evil should intercept the event."
-  :type '(radio (const :tag "Never" :value nil)
-                (const :tag "In terminal only" :value t)
-                (const :tag "Always" :value always))
   :group 'evil)
 
 (defcustom evil-show-paren-range 0
@@ -525,7 +491,6 @@ If STATE is nil, Evil is disabled in the buffer."
     magit-mode
     magit-reflog-mode
     magit-show-branches-mode
-    magit-branch-manager-mode ;; New name for magit-show-branches-mode
     magit-stash-mode
     magit-status-mode
     magit-wazzup-mode
@@ -629,11 +594,9 @@ If STATE is nil, Evil is disabled in the buffer."
     ert-results-mode
     help-mode
     Info-mode
-    Man-mode
     speedbar-mode
     undo-tree-visualizer-mode
-    view-mode
-    woman-mode)
+    view-mode)
   "Modes that should come up in Motion state."
   :type  '(repeat symbol)
   :group 'evil)
@@ -704,10 +667,6 @@ intercepted."
     beginning-of-visual-line
     c-beginning-of-defun
     c-end-of-defun
-    diff-file-next
-    diff-file-prev
-    diff-hunk-next
-    diff-hunk-prev
     down-list
     end-of-buffer
     end-of-defun
@@ -774,12 +733,14 @@ intercepted."
     pop-to-mark-command
     previous-error
     previous-line
+    redo
     right-char
     right-word
     scroll-down
     scroll-up
-    sgml-skip-tag-backward
-    sgml-skip-tag-forward
+    undo
+    undo-tree-redo
+    undo-tree-undo
     up-list)
   "Non-Evil commands to initialize to motions."
   :type  '(repeat symbol)
@@ -859,37 +820,11 @@ list of categories."
   :type '((character . character))
   :group 'evil-cjk)
 
-(defcustom evil-ex-complete-emacs-commands 'in-turn
-  "TAB-completion for Emacs commands in ex command line.
-This variable determines when Emacs commands are considered for
-completion, always, never, or only if no Evil ex command is
-available for completion."
-  :group 'evil
-  :type '(radio (const :tag "Only if no ex-command." :value in-turn)
-                (const :tag "Never" :value nil)
-                (const :tag "Always" :value t)))
-
-(defface evil-ex-commands '(( nil
-                              :underline t
-                              :slant italic))
-  "Face for the evil command in completion in ex mode."
-  :group 'evil)
-
 (defface evil-ex-info '(( ((supports :slant))
                           :slant italic
                           :foreground "red"))
   "Face for the info message in ex mode."
   :group 'evil)
-
-(defcustom evil-ex-visual-char-range nil
-  "Type of default ex range in visual char state.
-If non-nil the default range when starting an ex command from
-character visual state is `<,`> otherwise it is '<,'>. In the
-first case the ex command will be passed a region covering only
-the visual selection. In the second case the passed region will
-be extended to contain full lines."
-  :group 'evil
-  :type 'boolean)
 
 ;; Searching
 (defcustom evil-magic t
@@ -961,17 +896,6 @@ highlighted."
   "If t and substitute patterns are highlighted,
 the replacement is shown interactively."
   :type 'boolean
-  :group 'evil)
-
-(defcustom evil-ex-substitute-global nil
-  "If non-nil substitute patterns a global by default.
-Usually (if this variable is nil) a substitution works only on
-the first match of a pattern in a line unless the 'g' flag is
-given, in which case the substitution happens on all matches in a
-line. If this option is non-nil, this behaviour is reversed: the
-substitution works on all matches unless the 'g' pattern is
-specified, then is works only on the first match."
-  :type  'boolean
   :group 'evil)
 
 (defface evil-ex-search '((t :inherit isearch))
@@ -1244,13 +1168,10 @@ is not restored.")
 
 (defvar evil-last-paste nil
   "Information about the latest paste.
-This should be a list (CMD COUNT POINT BEG END FIRSTVISUAL) where
-CMD is the last paste-command (`evil-paste-before',
-`evil-paste-after' or `evil-visual-paste'), COUNT is the repeat
-count of the paste, POINT is the position of point before the
-paste, BEG end END are the region of the inserted
-text. FIRSTVISUAL is t if and only if the previous command was
-the first visual paste (i.e. before any paste-pop).")
+This should be a list (CMD POINT BEG END) where CMD is the last
+paste-command (either `evil-paste-before' or `evil-paste-after'),
+POINT is the position of point before the paste,
+BEG end END are the region of the inserted text.")
 
 (evil-define-local-var evil-last-undo-entry nil
   "Information about the latest undo entry in the buffer.
@@ -1367,6 +1288,8 @@ Key sequences bound in this map are immediately executed.")
 
 (defvar evil-ex-completion-map (make-sparse-keymap)
   "Completion keymap for Ex.")
+(set-keymap-parent evil-ex-completion-map minibuffer-local-completion-map)
+(define-key evil-ex-completion-map (kbd "SPC") #'self-insert-command)
 
 (defvar evil-ex-shell-argument-initialized nil
   "This variable is set to t if shell command completion has been initialized.
@@ -1392,9 +1315,6 @@ See `evil-ex-init-shell-argument-completion'.")
 
 (defvar evil-ex-previous-command nil
   "The previously executed Ex command.")
-
-(defvar evil-ex-point nil
-  "The position of `point' when the ex command has been called.")
 
 (defvar evil-ex-range nil
   "The current range of the Ex command.")
@@ -1454,10 +1374,6 @@ See `evil-ex-init-shell-argument-completion'.")
 (defvar evil-ex-substitute-current-replacement nil
   "The actual replacement.")
 
-(defvar evil-ex-last-was-search nil
-  "Non-nil if the previous was a search.
-Otherwise the previous command is assumed as substitute.")
-
 ;; The lazy-highlighting framework.
 (evil-define-local-var evil-ex-active-highlights-alist nil
   "An alist of currently active highlights.")
@@ -1469,7 +1385,7 @@ Otherwise the previous command is assumed as substitute.")
   "Keymap used in ex-search-mode.")
 (set-keymap-parent evil-ex-search-keymap minibuffer-local-map)
 
-(defconst evil-version "1.0-dev"
+(defconst evil-version "1.0.7"
   "The current version of Evil")
 
 (defun evil-version ()
