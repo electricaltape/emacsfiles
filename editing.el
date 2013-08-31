@@ -1,4 +1,4 @@
-(require 'undo-tree) ; required by evil
+;(require 'undo-tree) ; required by evil
 (require 'evil)
 (evil-mode 1)
 (setq evil-shift-width 4) ; fix behavior of > and < in normal state.
@@ -9,7 +9,7 @@
 (define-key evil-normal-state-map "tn" 'other-window)
 
 ;; yasnippet currently having trouble on the beta copy of aquamacs24
-(if (boundp 'aquamacs-version)
+(if (not (boundp 'aquamacs-version))
     (progn
       (require 'yasnippet)
       (yas-global-mode 1)
