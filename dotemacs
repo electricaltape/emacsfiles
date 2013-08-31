@@ -6,6 +6,11 @@
 ;;----------------------------------------------------------------------------
 ;; Preferences
 ;;----------------------------------------------------------------------------
+;
+; extra cl stuff for aquamacs. Necessary due to bugs in aquamacs.
+(if (boundp 'aquamacs-version) (load-file "~/.emacs.d/extra-cl.el"))
+
+(setq default-directory "~/")
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -21,10 +26,6 @@
 (require 'newcomment)
 ;; make the font size right.
 (set-face-attribute 'default nil :height 115)
-
-;; weather
-;; (load "~/.emacs.d/weather-2012.2.27.2.el")
-;; (require 'weather)
 
 ;; Pagewise formatting
 (add-hook 'text-mode-hook 'auto-fill-mode) ;; wrap long lines.
@@ -51,6 +52,9 @@
 ;;
 ;; Language stuff
 ;;
+; language independent (as of emacs 24)
+(add-hook 'prog-mode-hook
+          (lambda () (local-set-key (kbd "RET") 'newline-and-indent)))
 
 ;; C stuff
 (add-hook 'c-mode-common-hook (lambda () (load "~/.emacs.d/cmaster.el")))
@@ -74,9 +78,9 @@
 (setq ido-file-extensions-order '(".c" ".org" ".el"))
 
 ;; Julia stuff
-(load "~/.emacs.d/julia-mode.el")
-(load "~/.emacs.d/julia.el")
-(setq auto-mode-alist (append '(("/*.\.jl$" . julia-mode)) auto-mode-alist))
+;(load "~/.emacs.d/julia-mode.el")
+;(load "~/.emacs.d/julia.el")
+;(setq auto-mode-alist (append '(("/*.\.jl$" . julia-mode)) auto-mode-alist))
 
 ;; LaTeX stuff
 ;; (load "~/.emacs.d/vtex.el")
@@ -92,6 +96,13 @@
 (add-to-list 'auto-mode-alist '("/*.\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("/*.\.markdown$" . markdown-mode))
 
+;; matlab stuff
+(setq auto-mode-alist (delete '("\\.m$" . matlab-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+(add-hook 'octave-mode-hook (lambda ()
+                              (progn
+                                (load-file "~/.emacs.d/matlabmaster.el"))))
+
 ;; org-mode stuff
 (add-hook 'org-mode-hook
           (lambda ()
@@ -103,7 +114,7 @@
 ;; Python stuff
 (require 'python-mode)
 ;(require 'flymake-python-pyflakes)
-(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
+;(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 (setq auto-mode-alist (append '(("/*.\.sage$" . python-mode))
                               auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.py" . python-mode))
@@ -113,5 +124,5 @@
 
 ;; stuff for aquamacs. Ensure that this is the last line so that all
 ;; the variables are reset correctly. Otherwise do stuff for GNU/Linux.
-(if (boundp 'aquamacs-version) (load "~/.aquamacs")
+(if (boundp 'aquamacs-version) (load "~/.emacs.d/aquamacs.el")
   (setq-default ispell-program-name "aspell"))
