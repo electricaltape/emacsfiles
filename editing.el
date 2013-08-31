@@ -11,10 +11,14 @@
 (load-file "~/.emacs.d/plugins/surround.el")
 (require 'surround) ; add surround.
 (global-surround-mode 1)
-; yasnippet, cuz snippets rock.
-(require 'yasnippet)
-(yas-global-mode 1)
-(yas-load-directory "~/.emacs.d/plugins/yasnippet-snippets/snippets/text-mode")
-(setq yas-indent-line 'auto)
+
+;; yasnippet currently having trouble on the beta copy of aquamacs24
+(if (boundp 'aquamacs-version)
+    (progn
+      (require 'yasnippet)
+      (yas-global-mode 1)
+      (yas-load-directory
+       "~/.emacs.d/plugins/yasnippet-snippets/snippets/text-mode")
+      (setq yas-indent-line 'auto)))
 (require 'autopair)
 (autopair-global-mode 1)
