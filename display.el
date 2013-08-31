@@ -21,12 +21,14 @@
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-comidia)
-(set-face-attribute 'default nil
-                    :family "Monospace" :height 110)
+(if (not (boundp 'aquamacs-version))
+    (set-face-attribute 'default nil
+                        :family "Monospace" :height 110))
 (custom-set-faces
  '(mode-line ((t (:background "dim gray" :foreground "black" :box
                               (:line-width -1 :style released-button))))))
 (setq font-lock)
+(set-face-foreground 'minibuffer-prompt "thistle1")
 (set-face-foreground 'font-lock-negation-char-face "red")
 
 ; modify the syntax highlighting if in gui mode
