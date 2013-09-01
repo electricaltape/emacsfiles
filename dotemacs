@@ -16,7 +16,6 @@
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
-
 (setq default-directory "~/")
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -53,11 +52,6 @@
 ;;
 ;; Language stuff
 ;;
-; language independent (as of emacs 24)
-(add-hook 'prog-mode-hook
-          (lambda () (if (boundp 'evil-version)
-            (define-key evil-insert-state-map (kbd "RET") 'evil-ret-and-indent)
-            (local-set-key (kbd "RET") 'newline-and-indent))))
 
 ;; C stuff
 (add-hook 'c-mode-common-hook (lambda () (load "~/.emacs.d/cmaster.el")))
@@ -80,16 +74,10 @@
 (setq ido-enable-flex-matching t)
 (setq ido-file-extensions-order '(".c" ".org" ".el"))
 
-;; Julia stuff
-;(load "~/.emacs.d/julia-mode.el")
-;(load "~/.emacs.d/julia.el")
-;(setq auto-mode-alist (append '(("/*.\.jl$" . julia-mode)) auto-mode-alist))
-
 ;; LaTeX stuff
-;; (load "~/.emacs.d/vtex.el")
-(load "auctex.el" nil t t)
-(add-to-list 'auto-mode-alist '("/*.\.tex$" . LaTeX-mode))
-(add-hook 'LaTeX-mode-hook
+(require 'vtex-mode "~/.emacs.d/vtex.el")
+(add-to-list 'auto-mode-alist '("/*.\.tex$" . vtex-mode))
+(add-hook 'vtex-mode-hook
           (lambda ()
             (progn
               (load-file "~/.emacs.d/latexmaster.el")
@@ -104,7 +92,8 @@
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 (add-hook 'octave-mode-hook (lambda ()
                               (progn
-                                (load-file "~/.emacs.d/matlabmaster.el"))))
+                                (load-file "~/.emacs.d/matlabmaster.el")
+                                nil)))
 
 ;; org-mode stuff
 (add-hook 'org-mode-hook
@@ -115,9 +104,6 @@
             (define-key outline-minor-mode-map [(shift tab)] 'org-cycle)))
 
 ;; Python stuff
-(require 'python-mode)
-;(require 'flymake-python-pyflakes)
-;(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 (setq auto-mode-alist (append '(("/*.\.sage$" . python-mode))
                               auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.py" . python-mode))
