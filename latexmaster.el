@@ -1,25 +1,27 @@
 ;; AucTeX initialization settings
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
-(setq-default TeX-master nil)
-(setq TeX-parse-self t)
-(setq TeX-auto-save t)
+(if (not (boundp 'vtex-version))
+    (progn
+      (load "auctex.el" nil t t)
+      (load "preview-latex.el" nil t t)
+      (setq-default TeX-master nil)
+      (setq TeX-parse-self t)
+      (setq TeX-auto-save t)
 
-;; turn off the stupid resizing 'features'
-(setq font-latex-fontify-script nil)
-(setq font-latex-fontify-sectioning 'color)
-(font-latex-update-sectioning-faces)
-(font-lock-fontify-buffer)
+      ;; turn off the stupid resizing 'features'
+      (setq font-latex-fontify-script nil)
+      (setq font-latex-fontify-sectioning 'color)
+      (font-latex-update-sectioning-faces)
+      (font-lock-fontify-buffer)
 
-;; turn off the very stupid resizing for beamer.
-(custom-set-faces
- '(font-latex-slide-title-face ((t (:inherit font-lock-type-face)))))
+      ;; turn off the very stupid resizing for beamer.
+      (custom-set-faces
+       '(font-latex-slide-title-face ((t (:inherit font-lock-type-face)))))
 
-; turn on outline mode for nice section folding.
-; fix indentation.
-(setq LaTeX-indent-level 4)
-(setq LaTeX-item-indent -2)
-(setq TeX-newline-function 'newline-and-indent)
+      ; turn on outline mode for nice section folding.
+      ; fix indentation.
+      (setq LaTeX-indent-level 4)
+      (setq LaTeX-item-indent -2)
+(setq TeX-newline-function 'newline-and-indent)))
 ; add nice formatting and outline mode
 (auto-fill-mode 1)
 (outline-minor-mode)
