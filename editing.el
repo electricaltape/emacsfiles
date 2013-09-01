@@ -16,5 +16,9 @@
       (yas-load-directory
        "~/.emacs.d/plugins/yasnippet-snippets/snippets/text-mode")
       (setq yas-indent-line 'auto)))
-(require 'autopair)
-(autopair-global-mode 1)
+
+(smartparens-global-mode t)
+(setq sp-highlight-pair-overlay 'nil) ; turn off nasty green color thing
+; remove single-quotes (for lisp programming). Maybe turn it on again for other
+; modes? (not matlab)
+(sp-pair "'" nil :actions :rem)
