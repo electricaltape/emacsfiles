@@ -53,11 +53,6 @@
 ;;
 ;; Language stuff
 ;;
-; language independent (as of emacs 24)
-(add-hook 'prog-mode-hook
-          (lambda () (if (boundp 'evil-version)
-            (define-key evil-insert-state-map (kbd "RET") 'evil-ret-and-indent)
-            (local-set-key (kbd "RET") 'newline-and-indent))))
 
 ;; C stuff
 (add-hook 'c-mode-common-hook (lambda () (load "~/.emacs.d/cmaster.el")))
@@ -79,21 +74,6 @@
 (ido-everywhere 1)
 (setq ido-enable-flex-matching t)
 (setq ido-file-extensions-order '(".c" ".org" ".el"))
-
-;; Julia stuff
-;(load "~/.emacs.d/julia-mode.el")
-;(load "~/.emacs.d/julia.el")
-;(setq auto-mode-alist (append '(("/*.\.jl$" . julia-mode)) auto-mode-alist))
-
-;; LaTeX stuff
-;; (load "~/.emacs.d/vtex.el")
-(load "auctex.el" nil t t)
-(add-to-list 'auto-mode-alist '("/*.\.tex$" . LaTeX-mode))
-(add-hook 'LaTeX-mode-hook
-          (lambda ()
-            (progn
-              (load-file "~/.emacs.d/latexmaster.el")
-              (outline-minor-mode))))
 
 ;; markdown stuff
 (add-to-list 'auto-mode-alist '("/*.\.md$" . markdown-mode))
