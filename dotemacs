@@ -6,11 +6,7 @@
 ;;----------------------------------------------------------------------------
 ;; Preferences
 ;;----------------------------------------------------------------------------
-;
-; extra cl stuff for aquamacs. Necessary due to bugs in aquamacs.
-(if (boundp 'aquamacs-version) (load-file "~/.emacs.d/extra-cl.el"))
 
-;; package management stuff. Must be before editing/display files.
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -50,8 +46,11 @@
 (load "~/.emacs.d/editing.el")
 
 ;;
-;; Language stuff
+;; mode-specific settings.
 ;;
+
+;; ansi-term stuff
+(setq explicit-shell-file-name "/bin/zsh")
 
 ;; C stuff
 (add-hook 'c-mode-common-hook (lambda () (load "~/.emacs.d/cmaster.el")))
@@ -60,6 +59,9 @@
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (add-to-list 'auto-mode-alist '("\.d[i]?\'" . d-mode))
 (add-to-list 'auto-mode-alist '("/*.\.d$" . d-mode))
+
+;; eshell stuff
+(add-hook 'eshell-mode-hook (lambda () (smartparens-mode t)))
 
 ;; Haskell stuff
 (setq auto-mode-alist (append '(("/*.\.hs$" . haskell-mode)) auto-mode-alist))
@@ -75,13 +77,16 @@
 (setq ido-file-extensions-order '(".c" ".org" ".el"))
 
 ;; LaTeX stuff
-(require 'vtex-mode "~/.emacs.d/vtex.el")
+(require 'vtex-mode "~/.emacs.d/vtex.el" nil)
 (add-to-list 'auto-mode-alist '("/*.\.tex$" . vtex-mode))
 (add-hook 'vtex-mode-hook
           (lambda ()
             (progn
               (load-file "~/.emacs.d/latexmaster.el")
-              (outline-minor-mode))))
+              (outline-minor-mode)
+              nil)))
+(setq vtex-enable-align-continuation nil)
+(setq vtex-enable-delete-trailing-whitespace nil)
 
 ;; markdown stuff
 (add-to-list 'auto-mode-alist '("/*.\.md$" . markdown-mode))
@@ -98,7 +103,7 @@
 ;; org-mode stuff
 (add-hook 'org-mode-hook
           (lambda ()
-            (load-file "~/.emacs.d/orgmaster.el")))
+              (load-file "~/.emacs.d/orgmaster.el")))
 (add-hook 'outline-minor-mode-hook
           (lambda ()
             (define-key outline-minor-mode-map [(shift tab)] 'org-cycle)))
