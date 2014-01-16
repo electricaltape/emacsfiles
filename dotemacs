@@ -29,6 +29,11 @@
 ;; make the font size right.
 (set-face-attribute 'default nil :height 115)
 
+;; move between windows with SHIFT + arrow keys instead of C-o
+(if (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings)
+  (message "windmove not found"))
+
 ;; Pagewise formatting
 (add-hook 'text-mode-hook 'auto-fill-mode) ;; wrap long lines.
 ;; turn on automatic line wrapping at 79 - because it is 1980 and I am clearly
