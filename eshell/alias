@@ -1,0 +1,2 @@
+alias nil  $*
+alias git git --no-pager $*
