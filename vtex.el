@@ -2,7 +2,7 @@
 ; TODOs
 ;
 ; 1. The indentation for subsections is not quite right; new lines under a
-; subsection are not indented enough when the line wraps.
+;    subsection are not indented enough when the line wraps.
 ;
 ; 2. If the previous line starts with a '&=', align to three spaces
 ; over. Perhaps align the next &= if possible?
@@ -16,11 +16,32 @@
 ; "\)")
 ;
 ; 5. Get M-RET to insert the 'right' thing (item, section, subsection) based on
-; context
+;    context.
 ;
-; 6. get quotes working correctly (we wish to pair `` and ")
+; 6. get quotes working correctly (we wish to pair `` and ") (use header file)
 ;
 ; 7. get templates sorted out (currently don't do anything)
+;
+; 8. There is something wrong with indenting a line below a math block delimited
+;    by \[ and \].
+;
+; 9. When running M-q, also break paragraphs at \]s.
+;
+; 10. for highlighting keywords (e.g. \foo) do not include underscores (so
+;     \foo_bar should have "\foo" in white and "_bar" in blue).
+;
+; 11. When running M-q, if we are on a comment line then don't merge with the
+;     previous paragraph.
+;
+; 12. There is still something wrong with the before-save-hook (it
+;     overwrites the global value)
+;
+; 14. This may be a problem with evil, but when a line wraps the indentation is
+;     incorrect.
+;
+; 15. The 'white' syntax highlighting inside a \section{} block is turned off if
+;     I use special characters. There needs to be some 'layering' of
+;     highlighting here (highlight the section, then do math last)
 (defvar vtex-mode-hook nil)
 
 (defconst vtex-version 0.1
@@ -37,7 +58,7 @@
 (defconst vtex-font-lock-keywords-1
   ; just so that I can check what colors do what.
   (list
-   ; match \\
+   ; match                                                                    \\
    '("\\(\\\\\\\\\\)" 1 font-lock-negation-char-face)
    '("\\(aaaaa\\)" 1 font-lock-warning-face)
    '("\\(bbbbb\\)" 1 font-lock-function-name-face)
@@ -133,10 +154,12 @@
       (progn (message "found end block")
              (indent-line-to (vtex-matching-begin-indent))))))
 
+;; TODO implement this.
 (defun vtex--in-math-align-block ()
   "Determine if we are currently in some sort of math align environment."
   ; Assume that alignment sections cannot be nested. A new section or a begin
   ; block will terminate an align block.
+  nil
   )
 
 (defun vtex-indent-line ()
@@ -176,8 +199,8 @@
        ; Add code for checking to see if inside a math alignment block here.  If
        ; the previous line ended with "//", then indent to the "&=". Otherwise
        ; indent 3 more than last line (to align with previous "&=").
-       ((vtex--in-math-align-block)
-        (progn ))
+;;       ((vtex--in-math-align-block)
+;;        (progn ))
        ((looking-at "^ *$")
         (progn
           (while (and (eq (current-indentation) 0)
@@ -222,10 +245,14 @@
                 "\\\\")))))
 
 (defun vtex-align-continuation-right-buffer ()
+  "Align the terminating \\\\s to be at the 78th and 79th columns."
   (save-excursion
     (goto-char (point-min))
     (while (search-forward-regexp "\\\\\\\\\\s-*$" (point-max) t)
-      (let ((new-content
+      ; don't edit the line if it is already the correct length.
+      (if (= (- (line-end-position) (line-beginning-position)) 80)
+          nil
+        (let ((new-content
              (vtex--align-continuation-right
                       (buffer-substring-no-properties (line-beginning-position)
                                                       (line-end-position)))))
@@ -233,7 +260,7 @@
           (delete-region (line-beginning-position) (line-end-position))
           (goto-char (line-beginning-position))
           (insert new-content)
-          nil)))))
+          nil))))))
 
 ;; paragraph filling
 (defconst vtex-block-terminator-regexp
@@ -290,7 +317,9 @@ paragraph terminator, then return nil."
     (setq mode-name "VTEX")
     ;; TODO get rid of this?
     (add-hook 'before-save-hook (lambda ()
-                                  (progn (font-lock-fontify-buffer))) nil t)))
+                                  (progn (font-lock-fontify-buffer))) nil t)
+    (add-hook 'before-save-hook (lambda ()
+                                  (vtex-align-continuation-right-buffer)))))
 
 (provide 'vtex-mode)
 ;;; vtex-mode.el ends here
